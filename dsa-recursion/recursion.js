@@ -1,37 +1,50 @@
 /** product: calculate the product of an array of numbers. */
 
-function product(nums) {
-
+function product(nums, i = 0) {
+  return i === nums.length ? 1 : nums[i] * product(nums, i + 1)
 }
 
 /** longest: return the length of the longest word in an array of words. */
 
-function longest(words) {
-
+function longest(words, i = 0, longestSoFar = 0) {
+  if (i === words.length) return longestSoFar;
+  if (words[i].length > longestSoFar) {
+    longestSoFar = words[i].length;
+  }
+  return longest(words, i + 1, longestSoFar)
 }
 
 /** everyOther: return a string with every other letter. */
 
-function everyOther(str) {
-
+function everyOther(str, i = 0, outputStr = "") {
+  if (i >= str.length) return outputStr
+  outputStr += str[i]
+  return everyOther(str, i + 2, outputStr)
 }
 
 /** isPalindrome: checks whether a string is a palindrome or not. */
 
-function isPalindrome(str) {
-
+function isPalindrome(str, left = 0, right = str.length - 1) {
+ if (str[left] !== str[right]) return false;
+ if (left >= right) return true;
+ return isPalindrome(str, left + 1, right - 1)
 }
 
 /** findIndex: return the index of val in arr (or -1 if val is not present). */
 
-function findIndex(arr, val) {
-
+function findIndex(arr, val, i = 0) {
+  if (arr[i] === val) return i
+  if (i > arr.length) return -1
+  return findIndex(arr, val, i + 1)
 }
 
 /** revString: return a copy of a string, but in reverse. */
 
-function revString(str) {
-
+function revString(str, i = str.length - 1, outputStr = "") {
+  if (i < 0) return outputStr
+  console.log("i is: ", i)
+  console.log('str[i]: ', str[i])
+  return revString(str, i - 1, outputStr+= str[i])
 }
 
 /** gatherStrings: given an object, return an array of all of the string values. */
