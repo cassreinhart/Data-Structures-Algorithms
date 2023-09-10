@@ -49,14 +49,24 @@ function revString(str, i = str.length - 1, outputStr = "") {
 
 /** gatherStrings: given an object, return an array of all of the string values. */
 
-function gatherStrings(obj) {
-
+function gatherStrings(obj, outputArray = []) {
+  let values = Object.values(obj)
+  for (let v of values) {
+    if (typeof v === "string") outputArray.push(v)
+    if (typeof v === "object") gatherStrings(v, outputArray)
+  }
+  return outputArray
 }
 
 /** binarySearch: given a sorted array of numbers, and a value,
  * return the index of that value (or -1 if val is not present). */
 
-function binarySearch(arr, val) {
+function binarySearch(arr, val, left = 0, right = arr.length) {
+  if (left > right) return -1
+  let middle = Math.floor((right + left) / 2);
+
+  if (arr[middle] === val) return middle
+  return arr[middle] > val ? binarySearch(arr, val, left, middle - 1) : binarySearch(arr, val, middle + 1, right)
 
 }
 
