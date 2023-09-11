@@ -1,15 +1,15 @@
 class SimpleMap {
   constructor() {
-    this._items = []; //stores data
+    this._items = [];
   }
 
   set(k, v) {
-    this._items.push([k, v]); //store data as key, value pair in an array into our main array
+    this._items.push([k, v]);
   }
 
   get(k) {
-    let kv = this._items.find((kv) => k === kv[0]); //first index is the key itself
-    return kv ? kv[1] : undefined; //second index stores the value
+    let kv = this._items.find((kv) => k === kv[0]);
+    return kv ? kv[1] : undefined;
   }
 
   has(k) {
@@ -21,8 +21,7 @@ class SimpleMap {
     if (i !== -1) this._items.splice(i, 1);
   }
 
-  //map into a new array with these values
-  keys() { 
+  keys() {
     return this._items.map((kv) => kv[0]);
   }
   values() {
@@ -34,25 +33,13 @@ class SimpleMap {
 }
 
 // [['color', 'orange'], ['age', 29]]
-//above is pretty inefficient... there IS a better way!
 
-//enter the hash table (hash map)
-//implements an associative array abstract data type, a structure that can map keys to values;
-//uses a hash function to compute an INDEX, aka "hash code" into an array of buckets/slots 
-// from which the desired value can be found.
-
-//this function will give us a number from a string, and we can use this number to store the data at a certain index in an array.
 // function hash(key) {
 //   return Array.from(key).reduce(
 //     (accum, char) => accum + char.charCodeAt(),
 //     0
 //   );
 // }
-//the problems with above hashing functions include that the runtime is not constant time
-//a long string is more expensive to hash
-//also, if we hash a large string, we will get a very long index and a very long, very sparse array.
-
-
 // function hash(key, arrayLen) {
 //   const hash = Array.from(key).reduce(
 //     (accum, char) => accum + char.charCodeAt(),
