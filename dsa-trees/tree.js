@@ -15,12 +15,20 @@ class Tree {
   /** sumValues(): add up all of the values in the tree. */
 
   sumValues() {
-    
+    //below won't work because we have to traverse the whole tree and then sum up all the children...
+    return this.children.reduce((accum, curr) => accum + curr, 0)
   }
 
   /** countEvens(): count all of the nodes in the tree with even values. */
 
   countEvens() {
+    return this.children.reduce((accum, curr) => {
+      if (curr % 2 === 0) {
+        accum + curr
+      } else {
+        accum + 0
+      }
+    }, 0)
 
   }
 
