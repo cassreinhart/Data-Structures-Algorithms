@@ -53,14 +53,28 @@ class SimpleMap {
 //also, if we hash a large string, we will get a very long index and a very long, very sparse array.
 
 
-// function hash(key, arrayLen) {
-//   const hash = Array.from(key).reduce(
-//     (accum, char) => accum + char.charCodeAt(),
-//     0
-//   );
+function hash(key, arrayLen) {
+  const hash = Array.from(key).reduce(
+    (accum, char) => accum + char.charCodeAt(),
+    0
+  );
 
-//   return hash % arrayLen;
-// };
+  return hash % arrayLen; //use arr length to chop down the hash we get 
+};
+
+//hash('grape', 10) //7
+//hash('apple', 10) //0
+
+// const map = new HashMap()
+// map.set('apple', 'red')
+// map.set('grape', 'purple')
+
+//hash('cat', 10) //2
+//hash('act', 10) //2
+
+//will have collisions due to similar text hashing similarly
+//enter horner's method using prime numbers
+//by multiplying the sum by a prime number, it will make the order of the text meaningful.
 
 function hash(key, array_len) {
   // Prime number to use with Horner's method
@@ -73,6 +87,9 @@ function hash(key, array_len) {
 
   return numKey % array_len;
 }
+
+//hash('cat', 10) //6
+//hash('act', 10) //2
 
 class HashMap {
   constructor() {
@@ -87,3 +104,12 @@ class HashMap {
     return this._items[hashedKey];
   }
 }
+
+//collision strategies
+//separate chaining: storing multiple values in a bucket
+
+//runtime 
+//set //O(1) constant time
+//get, has //mostly O(1)
+//delete //mostly O(1)
+//keys, values, entries //O(n) linear
