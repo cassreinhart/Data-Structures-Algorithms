@@ -15,17 +15,17 @@ class Tree {
   /** sumValues(): add up all of the values in the tree. */
 
   sumValues() {
-    //below won't work because we have to traverse the whole tree and then sum up all the children...
-    // return this.children.reduce((accum, curr) => accum + curr, 0)
+    if (this.root === null) return 0;
 
-    let current = this.root;
+    let toVisitStack = [this.root];
     let sum = 0;
 
-    for (let i = 0; i < current.children.length; i++) {
-      for (let val of current.children) {
-        sum += val;
+    while (toVisitStack.length) {
+      let current = toVisitStack.pop();
+      sum += current.val;
+      for (let child of current.children) {
+        toVisitStack.push(child)
       }
-      current = current.children[i]
     }
     return sum;
   }
@@ -33,22 +33,18 @@ class Tree {
   /** countEvens(): count all of the nodes in the tree with even values. */
 
   countEvens() {
-    // return this.children.reduce((accum, curr) => {
-    //   if (curr % 2 === 0) {
-    //     accum + curr
-    //   } else {
-    //     accum + 0
-    //   }
-    // }, 0)
+    if (this.root === null) return 0;
 
-    let current = this.root;
+    let toVisitStack = [this.root];
     let sum = 0;
 
-    for (let i = 0; i < current.children.length; i++) {
-      for (let val of current.children) {
-        if (val % 2 === 0) sum += val;
+    while (toVisitStack.length) {
+      let current = toVisitStack.pop();
+      sum = current.val % 2 === 0 ? sum + 1 : sum;
+      
+      for (let child of current.children) {
+        toVisitStack.push(child)
       }
-      current = current.children[i]
     }
     return sum;
   }
@@ -57,7 +53,20 @@ class Tree {
    * whose value is greater than lowerBound. */
 
   numGreater(lowerBound) {
+    if (this.root === null) return 0;
 
+    let toVisitStack = [this.root];
+    let sum = 0;
+
+    while (toVisitStack.length) {
+      let current = toVisitStack.pop();
+      sum = current.val > lowerBound ? sum + 1 : sum;
+      
+      for (let child of current.children) {
+        toVisitStack.push(child)
+      }
+    }
+    return sum;
   }
 }
 
