@@ -17,28 +17,79 @@ class BinaryTree {
    * the length of the shortest path from the root to a leaf. */
 
   minDepth() {
+    if (this.root === null) return 0;
 
+    function findMin(node) {
+      if (node.left === null && node.right === null) return 1;
+
+      if (node.left === null) return findMin(node.right) + 1
+      if (node.right === null) return findMin(node.left) + 1
+
+      return (
+        Math.min(findMin(node.left), findMin(node.right)) + 1
+      )
+    }
+    return findMin(this.root)
   }
 
   /** maxDepth(): return the maximum depth of the tree -- that is,
    * the length of the longest path from the root to a leaf. */
 
   maxDepth() {
+    if (this.root === null) return 0;
 
+    function findMax(node) {
+      if (node.left === null && node.right === null) return 1;
+
+      if (node.left === null) return findMax(node.right) + 1
+      if (node.right === null) return findMax(node.left) + 1
+
+      return (
+        Math.max(findMax(node.left), findMax(node.right)) + 1
+      )
+    }
+    return findMax(this.root)
   }
 
   /** maxSum(): return the maximum sum you can obtain by traveling along a path in the tree.
    * The path doesn't need to start at the root, but you can't visit a node more than once. */
 
   maxSum() {
+    let sum = 0;
 
+    function findMax(node) {
+      if (node === null) return 0;
+      const leftSum = findMax(node.left);
+      const rightSum = findMax(node.right);
+      sum = Math.max(sum, node.val + leftSum + rightSum);
+      return Math.max(0, leftSum + node.val, rightSum + node.val)
+    }
+    findMax(this.root)
+    return sum;
   }
 
   /** nextLarger(lowerBound): return the smallest value in the tree
    * which is larger than lowerBound. Return null if no such value exists. */
 
   nextLarger(lowerBound) {
+    if (this.root === null) return null;
 
+    let queue = [this.root];
+    let closest = null;
+
+    while(queue.length) {
+      let current = queue.shift(); //fifo
+      let val = current.val;
+      let higherThan = val > lowerBound;
+      let reassignClosest = val < closest || closest === null;
+
+      if (higherThan && reassignClosest) {
+        closest = val;
+      }
+      if (current.left) queue.push(current.left)
+      if (current.right) queue.push(current.right)
+    }
+    return closest
   }
 
   /** Further study!
