@@ -40,14 +40,57 @@ class Graph {
 
   // this function accepts a vertex and removes it from the nodes property, it also updates any adjacency lists that include that vertex
   removeVertex(vertex) {
-    vertex.adjacent.delete()
+    let adjacencies = vertex.adjacent;
+    this.nodes.forEach((n) => {
+      if (n === vertex) this.nodes.delete(n)
+    })
+    adjacencies.forEach((v) => {
+      if (v === vertex) vertex.adjacent.delete(v)
+    })
   }
 
   // this function returns an array of Node values using DFS
-  depthFirstSearch(start) {}
+  depthFirstSearch(start) {
+    let toVisitStack = [start];
+    let seen = new Set(toVisitStack);
+    let out = [];
+
+    while (toVisitStack.length) {
+      let current = toVisitStack.pop();
+      out.push(current.value)
+
+      for (let neighbor of current.adjacent) {
+        if (!seen.has(neighbor)) {
+          toVisitStack.push(neighbor)
+          seen.add(neighbor)
+        }
+      }
+    }
+    return out;
+  }
 
   // this function returns an array of Node values using BFS
-  breadthFirstSearch(start) {}
+  breadthFirstSearch(start) {
+    let toVisitQueue = [start];
+    let seen = new Set(toVisitQueue);
+    let out = [];
+
+    while (toVisitQueue.length) {
+      let current = toVisitQueue.shift();
+
+      for (let neighbor of current.adjacent) {
+        if (!seen.has(neighbor)) {
+          toVisitQueue.push(neighbor)
+          seen.add(neighbor)
+        }
+      }
+    }
+    seen.forEach((v) => {
+      out.push(v.value)
+    })
+    console.log(out)
+    return out;
+  }
 }
 
 module.exports = {Graph, Node}
