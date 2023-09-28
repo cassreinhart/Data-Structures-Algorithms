@@ -1,8 +1,8 @@
-const insertionSort = require("./insertion")
+const {insertionSort, insertionSort2} = require("./insertion")
 
 describe('insertionSort', function () {
   it('should exist', function () {
-    expect(typeof insertionSort).toBe('function', "did you remember to define the 'insertionSort' function?");
+    expect(typeof insertionSort2).toBe('function', "did you remember to define the 'insertionSort' function?");
   });
 
   it('should sort numbers in ascending order', function () {
